@@ -6,6 +6,11 @@
         <script src="/lib/jquery.min.js" charset="utf-8"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js"></script>
         <style>
+
+            * {
+                box-sizing: border-box;
+            }
+
             .self {
                 text-align: right;
             }
@@ -13,18 +18,54 @@
             .other {
                 text-align: left;
             }
+
+            html, body {
+                margin: 0px;
+            }
+
+            .container {
+                max-width: 600px;
+                margin: auto;
+                border-left: 1px solid lightgrey;
+                border-right: 1px solid lightgrey;
+                border-bottom: 1px solid lightgrey;
+                padding: 10px;
+            }
+
+            .bordered {
+                display: inline-block;
+                padding: 5px;
+                border-radius: 5px;
+                max-width: 500px;
+            }
+
+            .self .bordered {
+                background-color: #ccfff6;
+            }
+
+            .other .bordered {
+                background-color: #EEE;
+            }
+
+            .newMessage {
+                width: 100%;
+                padding: 5px;
+            }
+
         </style>
     </head>
     <body>
-        <h1>Hello</h1>
+        <div class="container">
+            <h1>Hello</h1>
 
-        <p>Welcome to the chat app!</p>
+            <p>Welcome to the chat app!</p>
 
-        <div class="messages">
+            <div class="messages">
 
+            </div>
+
+            <input type="text" class="newMessage" placeholder="Type your message here.">
         </div>
-
-        <input type="text" class="newMessage">
 
         <script src="/js/app.js" charset="utf-8"></script>
     </body>

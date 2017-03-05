@@ -5,15 +5,18 @@ socket.on('connect', function(){
 });
 
 socket.on('message', function(data){
-    console.log('New Message: '+data.text);
-    $('<p>').addClass('other').text(data.text).appendTo('.messages');
+    addMessage('other', data.text);
 });
 
 $('.newMessage').on('keyup', function(e){
     if (e.which === 13){
         var text = $(this).val();
         socket.emit('message', {text: text});
-        $('<p>').addClass('self').text(text).appendTo('.messages');
+        addMessage('self', text);
         $(this).val('');
     }
 });
+
+function addMessage(owner, message){
+    $('<p>').addClass(owner).html('<span class="bordered">'+message+'</span>').appendTo('.messages');
+}
