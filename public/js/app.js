@@ -20,3 +20,8 @@ $('.newMessage').on('keyup', function(e){
 function addMessage(owner, message){
     $('<p>').addClass(owner).html('<span class="bordered">'+message+'</span>').appendTo('.messages');
 }
+
+socket.on('connections', function(data){
+    let connections = data.connections;
+    $('.connections').text(connections);
+});
