@@ -14,7 +14,7 @@ io.on('connection', function(socket){
     });
 });
 
-var port = env.PORT || 34862;
+var port = process.env.PORT || 34862;
 http.listen(port, function(){
     console.log("Server started on port "+port);
 });
