@@ -1,0 +1,11 @@
+{
+  "name": "sockets",
+  "version": "1.0.0",
+  "main": "server.js",
+  "repository": {},
+  "author": "Chris Wilson <vyper374@hotmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.15.0"
+  }
+}
