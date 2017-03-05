@@ -1,0 +1,55 @@
+* {
+    box-sizing: border-box;
+}
+
+h1 {
+    text-align: center;
+}
+
+.self {
+    text-align: right;
+}
+
+.other {
+    text-align: left;
+}
+
+html, body {
+    margin: 0px;
+}
+
+.container {
+    max-width: 800px;
+    margin: auto;
+    border-left: 1px solid lightgrey;
+    border-right: 1px solid lightgrey;
+    border-bottom: 1px solid lightgrey;
+    padding: 10px;
+}
+
+.bordered {
+    display: inline-block;
+    padding: 5px;
+    border-radius: 5px;
+    max-width: 80%;
+}
+
+.self .bordered {
+    background-color: #ccfff6;
+}
+
+.other .bordered {
+    background-color: #EEE;
+}
+
+.newMessage {
+    width: 100%;
+    padding: 5px;
+}
+
+.connectionP {
+    font-size: 0.8em;
+    color: #BBB;
+    margin-bottom: 0px;
+    text-align: center;
+}
