@@ -3,14 +3,29 @@
     <head>
         <meta charset="utf-8">
         <title>Sockets</title>
-        <script src="lib/jquery.min.js" charset="utf-8"></script>
+        <script src="/lib/jquery.min.js" charset="utf-8"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js"></script>
+        <style>
+            .self {
+                text-align: right;
+            }
+
+            .other {
+                text-align: left;
+            }
+        </style>
     </head>
     <body>
         <h1>Hello</h1>
 
-        <script>
-            var socket = io();
-        </script>
+        <p>Welcome to the chat app!</p>
+
+        <div class="messages">
+
+        </div>
+
+        <input type="text" class="newMessage">
+
+        <script src="/js/app.js" charset="utf-8"></script>
     </body>
 </html>
