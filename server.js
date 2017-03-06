@@ -2,17 +2,22 @@ const express = require('express');
 const app = express();
 let http = require('http').Server(app);
 let io = require('socket.io')(http);
+let moment = require('moment');
 
 app.use(express.static(__dirname+'/public'));
 
 let connections = 0;
 
+console.log(moment.utc());
+
 io.on('connection', function(socket){
     console.log('User connected via socket.io!');
+    let id = socket.id;
     connections++;
     io.emit('connections', {connections: connections});
 
     socket.on('message', function(message){
+        //console.log('message sent from id: '+id);
         socket.broadcast.emit('message', message);
     });
 

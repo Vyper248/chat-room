@@ -2,6 +2,10 @@
     box-sizing: border-box;
 }
 
+html, body {
+    margin: 0px;
+}
+
 h1 {
     text-align: center;
 }
@@ -14,22 +18,16 @@ h1 {
     text-align: left;
 }
 
-html, body {
-    margin: 0px;
-}
-
-.container {
-    max-width: 800px;
-    margin: auto;
-    border-left: 1px solid lightgrey;
-    border-right: 1px solid lightgrey;
-    border-bottom: 1px solid lightgrey;
-    padding: 10px;
+.date {
+    text-align: center;
+    color: #BBB;
+    font-family: sans-serif;
+    font-weight: lighter;
 }
 
 .bordered {
     display: inline-block;
-    padding: 5px;
+    padding: 10px;
     border-radius: 5px;
     max-width: 80%;
 }
@@ -42,7 +40,16 @@ html, body {
     background-color: #EEE;
 }
 
-.newMessage {
+.time {
+    float:right;
+    padding: 12px;
+    color: #BBB;
+    font-family: sans-serif;
+    font-weight: lighter;
+    font-size: 0.8em;
+}
+
+#newMessage {
     width: 100%;
     padding: 5px;
 }
@@ -52,4 +59,32 @@ html, body {
     color: #BBB;
     margin-bottom: 0px;
     text-align: center;
+}
+
+#mainContainer {
+    display: flex;
+    flex-direction: column;
+    max-width: 800px;
+    height: 100vh;
+    margin: auto;
+    justify-content: space-between;
+    border: 1px solid lightgrey;
+}
+
+#heading {
+    border-bottom: 1px solid lightgrey;
+    padding: 10px;
+    text-align: center;
+}
+
+#messages {
+    height: 100%;
+    padding: 15px;
+    overflow-y: scroll;
+    background-color: #F5FBFE;
+}
+
+#bottomContent {
+    border-top: 1px solid lightgrey;
+    padding: 10px;
 }
