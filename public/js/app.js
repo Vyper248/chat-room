@@ -11,7 +11,7 @@ let emotes = [
     {text: '(kiss)', emote: 'kiss.gif'},
     {text: ':D', emote: 'grin.png'},
     {text: ':(', emote: 'sad.png'},
-    {text: ':S', emote: 'S.png'},
+    {text: ':S', emote: 'worry.gif'},
     {text: '(cry)', emote: 'cry.png'},
     {text: ':)', emote: 'happy.png'},
     {text: '(zombie)', emote: 'zombie.png'},
@@ -71,7 +71,7 @@ function checkEmotes(text){
 
         let re = new RegExp(emoteText, "gi");
 
-        if (text.trim().length === emoteLength){
+        if (text.trim().length === emoteLength && text.match(re)){
             bordered = 'noBorder';
             text = text.replace(re, '<image src="icons/'+emote.emote+'" height="60px"></image>');
         } else {
