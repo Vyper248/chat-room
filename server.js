@@ -61,6 +61,8 @@ io.on('connection', function(socket){
     //send the room details to the new user
     socket.emit('details', {room, name});
 
+    socket.broadcast.to(room).emit('newMember', {name});
+
     socket.on('message', function(message){
         //console.log('message sent from id: '+id);
         message = checkEmotes(message.text);
@@ -77,6 +79,7 @@ io.on('connection', function(socket){
     socket.on('disconnect', function(){
         connections[room]--;
         io.emit('connections', {connections: connections[room]});
+        socket.broadcast.to(room).emit('memberLeft', {name});
     });
 });
 

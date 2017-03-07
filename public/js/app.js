@@ -1,5 +1,6 @@
 let socket = io();
-let currentDate;
+let currentDate = moment().format('Do MMMM YYYY');
+$('<p>').addClass('date').text(currentDate).appendTo('#messages');
 let currentName = '';
 
 let audio = new Audio('ding.mp3');
@@ -36,8 +37,18 @@ socket.on('message', function(data){
     }
 });
 
+socket.on('newMember', function(data){
+    checkDate();
+    $('<p>').addClass('date').text(data.name+' has joined this room.').appendTo('#messages');
+});
+
+socket.on('memberLeft', function(data){
+    checkDate();
+    $('<p>').addClass('date').text(data.name+' has left this room.').appendTo('#messages');
+});
+
 $('#newMessage').on('keyup', function(e){
-    if (e.which === 13){
+    if (e.which === 13 && $(this).val().length > 0){
         var text = $(this).val();
         socket.emit('message', {text: text});
         checkDate();
