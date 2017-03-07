@@ -1,45 +1,39 @@
 let socket = io();
 let currentDate;
+let currentName = '';
 
-let emotes = [
-    {text: '<3', emote: 'heart.png'},
-    {text: 'XD', emote: 'XD.png'},
-    {text: '(hug)', emote: 'hug.png'},
-    {text: ':P', emote: 'tongue.png'},
-    {text: '8)', emote: 'hearteyes.png'},
-    {text: ':O', emote: 'surprised.png'},
-    {text: '(kiss)', emote: 'kiss.gif'},
-    {text: ':D', emote: 'grin.png'},
-    {text: ':(', emote: 'sad.png'},
-    {text: ':S', emote: 'worry.gif'},
-    {text: '(cry)', emote: 'cry.png'},
-    {text: ':)', emote: 'happy.png'},
-    {text: '(zombie)', emote: 'zombie.png'},
-    {text: '(sleepy)', emote: 'zzz.png'},
-    {text: '(onfire)', emote: 'onfire.png'},
-    {text: '(cookie)', emote: 'cookie.png'},
-    {text: '(ninja)', emote: 'ninja.png'},
-    {text: '(sick)', emote: 'sick.png'},
-    {text: '(ignoring)', emote: 'ignoring.png'},
-    {text: '(cool)', emote: 'cool.png'},
-    {text: '(hehe)', emote: 'hehe.png'},
-    {text: '(shy)', emote: 'shy.png'},
-    {text: '(devil)', emote: 'devil.png'},
-    {text: '(inlove)', emote: 'inlove.gif'},
-    {text: '(bearhug)', emote: 'bearHug.gif'},
-    {text: '(penguin)', emote: 'penguin.gif'},
-    {text: '(penguinkiss)', emote: 'penguinKiss.gif'},
-    {text: '(heart)', emote: 'heart.gif'},
+let audio = new Audio('ding.mp3');
 
-];
+//variables to use for detecting visiability changes, and the event to listen for
+let hidden, visibilityChange;
+if (typeof document.hidden !== "undefined") { // Opera 12.10 and Firefox 18 and later support
+  hidden = "hidden";
+  visibilityChange = "visibilitychange";
+} else if (typeof document.msHidden !== "undefined") {
+  hidden = "msHidden";
+  visibilityChange = "msvisibilitychange";
+} else if (typeof document.webkitHidden !== "undefined") {
+  hidden = "webkitHidden";
+  visibilityChange = "webkitvisibilitychange";
+}
 
 socket.on('connect', function(){
     console.log('Connected to socket.io server!');
 });
 
+socket.on('details', function(data){
+    $('#roomName').text(data.room);
+});
+
 socket.on('message', function(data){
     checkDate();
-    addMessage('other', data);
+    if (data.owner !== 'self') checkName(data.name);
+    else currentName = '';
+    addMessage(data);
+    if (document[hidden]) {
+        audio.play();
+        $('#title').text('New Message!');
+    }
 });
 
 $('#newMessage').on('keyup', function(e){
@@ -47,39 +41,23 @@ $('#newMessage').on('keyup', function(e){
         var text = $(this).val();
         socket.emit('message', {text: text});
         checkDate();
-        addMessage('self', {text: text});
+        //addMessage('self', {text: text});
         $(this).val('');
     }
 });
 
-function addMessage(owner, message){
+function addMessage(message){
     let time = moment().format('kk:mm');
-    messageParams = checkEmotes(message.text);
-    message.text = messageParams.text;
-    let borderClass = messageParams.bordered;
-    $('<p>').addClass(owner).html('<span class="'+borderClass+'">'+message.text+'</span><span class="time">'+time+'</span>').appendTo('#messages');
+    let borderClass = message.bordered;
+    $('<p>').addClass(message.owner).html('<span class="'+borderClass+'">'+message.text+'</span><span class="time">'+time+'</span>').appendTo('#messages');
     $('#messages').scrollTop($('#messages').prop('scrollHeight'));//scroll to bottom
 }
 
-function checkEmotes(text){
-    let bordered = 'bordered';
-    emotes.forEach(function(emote){
-        let emoteLength = emote.text.length;
-        let emoteText = emote.text;
-        emoteText = emoteText.replace('(', '\\(');
-        emoteText = emoteText.replace(')', '\\)');
-
-        let re = new RegExp(emoteText, "gi");
-
-        if (text.trim().length === emoteLength && text.match(re)){
-            bordered = 'noBorder';
-            text = text.replace(re, '<image src="icons/'+emote.emote+'" height="60px"></image>');
-        } else {
-            text = text.replace(re, '<image src="icons/'+emote.emote+'" height="20px"></image>');
-        }
-    });
-
-    return {text: text, bordered: bordered};
+function checkName(name){
+    if (name !== currentName){
+        $('<p>').addClass('name').text(name).appendTo('#messages');
+        currentName = name;
+    }
 }
 
 function checkDate(){
@@ -93,4 +71,11 @@ function checkDate(){
 socket.on('connections', function(data){
     let connections = data.connections;
     $('.connections').text(connections);
+});
+
+//when user views the page after going away from it, set the title to Chatting App, in case it was changed to New Message
+document.addEventListener(visibilityChange, function(){
+    if (!document[hidden]) {
+        $('#title').text('Chatting App');
+    }
 });

@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>Chatting App</title>
+        <title id="title">Chatting App</title>
         <script src="/lib/jquery.min.js" charset="utf-8"></script>
         <script src="/lib/moment.min.js" charset="utf-8"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js"></script>
@@ -15,7 +15,7 @@
             <div id="heading">
                 <h1>The Awesome Public Chatting App!!</h1>
 
-                <p>Welcome to the chat app!</p>
+                <p>Welcome to room: <span id="roomName"></span></p>
             </div>
 
             <div id="messages">
@@ -23,7 +23,7 @@
             </div>
 
             <div id="bottomContent">
-                <input type="text" id="newMessage" placeholder="Type your message here.">
+                <input type="text" id="newMessage" placeholder="Type your message here." autofocus>
                 <p class="connectionP">Number of users connected: <span class="connections"></span></p>
             </div>
 
