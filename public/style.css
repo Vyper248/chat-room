@@ -83,6 +83,22 @@ h1 {
     border-bottom: 1px solid lightgrey;
     padding: 10px;
     text-align: center;
+    position: relative;
+}
+
+#leaveRoomBtn {
+    text-decoration: none;
+    background-color: #F88;
+    padding: 5px;
+    border-radius: 5px;
+    color: black;
+    position: absolute;
+    top: 5px;
+    left: 5px;
+}
+
+#leaveRoomBtn:hover {
+    background-color: #F33
 }
 
 #messages {

@@ -61,6 +61,7 @@ io.on('connection', function(socket){
     //send the room details to the new user
     socket.emit('details', {room, name});
 
+    //broadcast to everyone that you've joined the room
     socket.broadcast.to(room).emit('newMember', {name});
 
     socket.on('message', function(message){
