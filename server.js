@@ -45,7 +45,7 @@ let emotes = [
 ];
 
 io.on('connection', function(socket){
-    //console.log('User connected via socket.io!');
+    console.log('User connected via socket.io!');
 
     //keep track of this sockets name and room
     let referer = socket.handshake.headers.referer;
@@ -59,7 +59,7 @@ io.on('connection', function(socket){
     io.emit('connections', {connections: connections[room]});
 
     //send the room details to the new user
-    socket.emit('details', {room, name});
+    socket.emit('details', {room: room});
 
     //broadcast to everyone that you've joined the room
     socket.broadcast.to(room).emit('newMember', {name});

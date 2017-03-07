@@ -22,6 +22,7 @@ socket.on('connect', function(){
     console.log('Connected to socket.io server!');
 });
 
+//handle any details received
 socket.on('details', function(data){
     $('#roomName').text(data.room);
 });
