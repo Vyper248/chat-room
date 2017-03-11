@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 let http = require('http').Server(app);
-let io = require('socket.io')(http);
+let io = require('socket.io')(http, {pingInterval: 1000, pingTimeout: 5000});
 let moment = require('moment');
 
 app.use(express.static(__dirname+'/public'));
@@ -42,7 +42,7 @@ let emotes = [
 ];
 
 io.on('connection', function(socket){
-    console.log('User connected via socket.io!');
+    //console.log('User connected via socket.io!');
 
     //keep track of this sockets name and room
     let referer = socket.handshake.headers.referer;
@@ -86,6 +86,7 @@ io.on('connection', function(socket){
         //send member left notice to room
         socket.broadcast.to(room).emit('memberLeft', {name});
     });
+
 });
 
 let port = process.env.PORT || 34862;
