@@ -6,9 +6,6 @@ let moment = require('moment');
 
 app.use(express.static(__dirname+'/public'));
 
-//keep track of connections for each room
-let connections = {};
-
 //id to add to anonymous users to tell them apart
 let anonymousId = 1;
 
@@ -54,10 +51,12 @@ io.on('connection', function(socket){
 
     socket.join(room);
 
-    //increment the connections for this room, or start at 1 if undefined
-    connections[room] ? connections[room]++ : connections[room] = 1;
-    io.emit('connections', {connections: connections[room]});
-
+    //send number of users in this room
+    if (io.sockets.adapter.rooms[room] === undefined){
+        io.to(room).emit('connections', {connections: 1});
+    } else {
+        io.to(room).emit('connections', {connections: io.sockets.adapter.rooms[room].length});
+    }
     //send the room details to the new user
     socket.emit('details', {room: room});
 
@@ -78,8 +77,13 @@ io.on('connection', function(socket){
     });
 
     socket.on('disconnect', function(){
-        connections[room]--;
-        io.emit('connections', {connections: connections[room]});
+        //if room still exists, send correct connections count
+        if (io.sockets.adapter.rooms[room] === undefined){
+            socket.broadcast.to(room).emit('connections', {connections: 1});
+        } else {
+            socket.broadcast.to(room).emit('connections', {connections: io.sockets.adapter.rooms[room].length});
+        }
+        //send member left notice to room
         socket.broadcast.to(room).emit('memberLeft', {name});
     });
 });
