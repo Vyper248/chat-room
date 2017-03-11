@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 let http = require('http').Server(app);
-let io = require('socket.io')(http, {pingInterval: 1000, pingTimeout: 5000});
+let io = require('socket.io')(http, {pingInterval: 10000, pingTimeout: 5000});
 let moment = require('moment');
 
 app.use(express.static(__dirname+'/public'));
